@@ -1,0 +1,31 @@
+﻿@model List<Miniatuurland.Models.Product>
+
+@{
+    ViewBag.Title = "Test";
+}
+
+<h2>Test</h2>
+@if (Model != null)
+{
+    <table class="table table-default">
+        <thead>
+            <tr>
+                <th>Product Id</th>
+                <th>Product</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(p => item.productID)</td>
+                    <td>@Html.DisplayFor(p => item.product)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <span class="alert alert-danger">Er werden geen producten gevonden voor deze Productline.</span>
+}

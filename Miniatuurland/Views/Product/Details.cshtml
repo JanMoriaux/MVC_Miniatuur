@@ -1,0 +1,95 @@
+﻿@using Miniatuurland.Models
+@model Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row">
+    <div class="col-md-1">
+        <a href='@Url.Action("List","Product",new { id = Model.productlineID })'>
+            <img class="media-object" src='@Url.Content("~/Images/BackButton.png")' alt="go back button"
+                 style="height:35px;width:auto" onclick="goBack()" />
+        </a>
+    </div>
+    <div class="col-md-9">
+        <h4>@Model.product</h4>
+    </div>
+    <div class="col-md-2">
+        <a href='@Url.Action("Add","Cart",new { productId = Model.productID })'>
+            <img src='@Url.Content("~/Images/shop-cart-add-icon.png")' alt="Add button"
+                 style="height:35px;width:auto" />
+        </a>
+    </div>
+</div>
+
+
+
+
+<hr />
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.product)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.product)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.scale)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.scale)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.description)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.description)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.quantityInStock)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.quantityInStock)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.quantityInOrder)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.quantityInOrder)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.buyPrice)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.buyPrice)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.ProductLine.productLine)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.ProductLine.productLine)
+    </dd>
+
+</dl>
+
+@section scripts{
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+}

@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "ConfirmRegistration";
+    bool ok = (bool)ViewBag.registrationOk;
+}
+
+@if (ok)
+{
+    <p class="lead">
+        Registration succesfull!!
+    </p>
+    @Html.ActionLink("To Shop","Index", "Product", null, new { @class = "btn btn-default chocolate" });
+}
+else
+{
+
+    <p class="lead">
+        There was a problem with the registration! Please try again.
+    </p>
+    @Html.ActionLink("Register","Register", "Customer", null, new { @class = "btn btn-default chocolate" });
+}

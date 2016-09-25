@@ -1,0 +1,65 @@
+﻿@model Miniatuurland.Models.RegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<p class="page-header">Please fill out the form below</p>
+<div>
+    @using (Html.BeginForm("Register", "Customer", FormMethod.Post))
+    {
+        <table>
+            <tr>
+                <td class="col col-md-1">@Html.LabelFor(m => m.name)</td>
+                <td class="col col-md-2">@Html.EditorFor(m => m.name)</td>
+                <td class="col col-md-1">@Html.ValidationMessageFor(m => m.name)</td>
+            </tr>
+            <tr>
+                <td class="col col-md-1">@Html.LabelFor(m => m.address)</td>
+                <td class="col col-md-2">@Html.EditorFor(m => m.address)</td>
+                <td class="col col-md-1">@Html.ValidationMessageFor(m => m.address)</td>
+            </tr>
+            <tr>
+                <td class="col col-md-1">@Html.LabelFor(m => m.city)</td>
+                <td class="col col-md-2">@Html.EditorFor(m => m.city)</td>
+                <td class="col col-md-1">@Html.ValidationMessageFor(m => m.city)</td>
+            </tr>
+            <tr>
+                <td class="col col-md-1">@Html.LabelFor(m => m.state)</td>
+                <td class="col col-md-2">@Html.EditorFor(m => m.state)</td>
+                <td class="col col-md-1">@Html.ValidationMessageFor(m => m.state)</td>
+            </tr>
+            <tr>
+                <td class="col col-md-1">@Html.LabelFor(m => m.postalCode)</td>
+                <td class="col col-md-2">@Html.EditorFor(m => m.postalCode)</td>
+                <td class="col col-md-1">@Html.ValidationMessageFor(m => m.postalCode)</td>
+            </tr>
+            <tr>
+                <td class="col col-md-1">@Html.LabelFor(m => m.username)</td>
+                <td class="col col-md-2">@Html.EditorFor(m => m.username)</td>
+                <td class="col col-md-1">@Html.ValidationMessageFor(m => m.username)</td>
+            </tr>
+            <tr>
+                <td class="col col-md-1">@Html.LabelFor(m => m.password)</td>
+                <td class="col col-md-2">@Html.EditorFor(m => m.password)</td>
+                <td class="col col-md-1">@Html.ValidationMessageFor(m => m.password)</td>
+            </tr>
+            <tr>
+                <td class="col col-md-1">@Html.LabelFor(m => m.repeatPassword)</td>
+                <td class="col col-md-2">@Html.EditorFor(m => m.repeatPassword)</td>
+                <td class="col col-md-1">@Html.ValidationMessageFor(m => m.repeatPassword)</td>
+            </tr>
+            <tr>
+                <td class="col col-md-1">@Html.LabelFor(m => m.email)</td>
+                <td class="col col-md-2">@Html.EditorFor(m => m.email)</td>
+                <td class="col col-md-1">@Html.ValidationMessageFor(m => m.email)</td>
+            </tr>
+        </table>
+                    <p>
+                        <input type="submit" class="btn btn-default chocolate" value="Register" />
+                    </p>
+    }
+</div>
+@*@@Html.ValidationSummary("Found the following validation errors")*@
+
+

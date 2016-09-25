@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "CheckoutConfirm";
+}
+
+<div class="page-header top">
+    <div class="row">
+        <div class="col col-md-1">
+            <a href='#' onclick="goBack()">
+                <img src='@Url.Content("~/Images/BackButton.png")' style='height:auto;width:40px;' title='Back to Shop' />
+            </a>
+        </div>
+        <div class="col col-md-8">
+            <p class="lead">@ViewBag.Title</p>
+        </div>
+        <div class="col-md-2" style="float:right">
+            <a href='@Url.Action("Empty","Cart")'>
+                <img src='@Url.Content("~/Images/delete.jpg")' style='height:auto;width:40px;float:right' title='Empty Shopping Cart' />
+            </a>
+        </div>
+    </div>
+</div>
+
+@if (Session["customer"] != null)
+{
+    <label class="text-info">Confirm your purchase?</label>
+    <a href='@Url.Action("Checkout","Cart")'>
+        <p class="btn btn-default chocolate">OK</p>
+    </a>
+    <button class="btn btn-default chocolate" onclick="goBack()">Back to shop</button>
+}
+else
+{
+    <label class="text-info">You need to log on to confirm your purchase</label>
+    <div class="row">
+        <div class="col col-md-1">
+            <a href='@Url.Action("Login","Customer")' class="btn btn-default chocolate">
+                Login
+            </a>
+        </div>
+        <div class="col col-md-1">
+            <a href='@Url.Action("Register","Customer")' class="btn btn-default chocolate">
+                Register
+            </a>
+        </div>
+    </div>
+}
+
+
+
+@section scripts{
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+}

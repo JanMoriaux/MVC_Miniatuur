@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="miniatuurlandModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="countryID" />
+          </Key>
+          <Property Name="countryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="country" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="customerID" />
+          </Key>
+          <Property Name="customerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" />
+          <Property Name="city" Type="nvarchar" MaxLength="50" />
+          <Property Name="state" Type="nvarchar" MaxLength="15" />
+          <Property Name="postalCode" Type="nvarchar" MaxLength="15" />
+          <Property Name="countryID" Type="int" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="applicationname" Type="nvarchar" MaxLength="255" />
+          <Property Name="email" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="passwordQuestion" Type="nvarchar" MaxLength="200" />
+          <Property Name="passwordAnswer" Type="nvarchar" MaxLength="200" />
+          <Property Name="comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="isapproved" Type="bit" />
+          <Property Name="lastactivitydate" Type="datetime" />
+          <Property Name="lastlogindate" Type="datetime" />
+          <Property Name="lastpasswordchangeddate" Type="datetime" />
+          <Property Name="creationDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsOnline" Type="bit" />
+          <Property Name="IsLockedOut" Type="bit" />
+          <Property Name="FailedPasswordAttemptCount" Type="int" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="datetime" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="int" />
+          <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="employeeID" />
+          </Key>
+          <Property Name="employeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="reportsTo" Type="smallint" />
+          <Property Name="jobTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="userid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="orderID" />
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="orderID" Type="int" Nullable="false" />
+          <Property Name="productID" Type="int" Nullable="false" />
+          <Property Name="quantityOrdered" Type="smallint" />
+          <Property Name="priceEach" Type="money" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="orderID" />
+          </Key>
+          <Property Name="orderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="orderDate" Type="datetime" />
+          <Property Name="requiredDate" Type="datetime" />
+          <Property Name="shippedDate" Type="datetime" />
+          <Property Name="status" Type="nvarchar" MaxLength="15" />
+          <Property Name="comments" Type="nvarchar(max)" />
+          <Property Name="customerID" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductLines">
+          <Key>
+            <PropertyRef Name="productLineID" />
+          </Key>
+          <Property Name="productLineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productLine" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product" Type="nvarchar" MaxLength="70" />
+          <Property Name="scale" Type="nvarchar" MaxLength="10" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="quantityInStock" Type="smallint" />
+          <Property Name="quantityInOrder" Type="smallint" />
+          <Property Name="buyPrice" Type="money" />
+          <Property Name="productlineID" Type="int" />
+        </EntityType>
+        <EntityType Name="Stores">
+          <Key>
+            <PropertyRef Name="StoreId" />
+          </Key>
+          <Property Name="StoreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoreName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="6" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="latitude" Type="float" />
+          <Property Name="longitude" Type="float" />
+        </EntityType>
+        <Association Name="FK_Customers_Countries">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="countryID" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="orderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductLines">
+          <End Role="ProductLines" Type="Self.ProductLines" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductLines">
+              <PropertyRef Name="productLineID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="productlineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="miniatuurlandModelStoreContainer">
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductLines" EntityType="Self.ProductLines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stores" EntityType="Self.Stores" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customers_Countries" Association="Self.FK_Customers_Countries">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Products" Association="Self.FK_OrderDetails_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductLines" Association="Self.FK_Products_ProductLines">
+            <End Role="ProductLines" EntitySet="ProductLines" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="miniatuurlandModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="countryID" />
+          </Key>
+          <Property Name="countryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Customers_Countries" FromRole="Countries" ToRole="Customers" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="customerID" />
+          </Key>
+          <Property Name="customerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="state" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="postalCode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="countryID" Type="Int32" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="applicationname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="passwordQuestion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="passwordAnswer" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="isapproved" Type="Boolean" />
+          <Property Name="lastactivitydate" Type="DateTime" Precision="3" />
+          <Property Name="lastlogindate" Type="DateTime" Precision="3" />
+          <Property Name="lastpasswordchangeddate" Type="DateTime" Precision="3" />
+          <Property Name="creationDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsOnline" Type="Boolean" />
+          <Property Name="IsLockedOut" Type="Boolean" />
+          <Property Name="FailedPasswordAttemptCount" Type="Int32" />
+          <Property Name="FailedPasswordAttemptWindowStart" Type="DateTime" Precision="3" />
+          <Property Name="FailedPasswordAnswerAttemptCount" Type="Int32" />
+          <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Country" Relationship="Self.FK_Customers_Countries" FromRole="Customers" ToRole="Countries" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Customers" FromRole="Customers" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employeeID" />
+          </Key>
+          <Property Name="employeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="reportsTo" Type="Int16" />
+          <Property Name="jobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="orderID" />
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="orderID" Type="Int32" Nullable="false" />
+          <Property Name="productID" Type="Int32" Nullable="false" />
+          <Property Name="quantityOrdered" Type="Int16" />
+          <Property Name="priceEach" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetails_Orders" FromRole="OrderDetails" ToRole="Orders" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_OrderDetails_Products" FromRole="OrderDetails" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="orderID" />
+          </Key>
+          <Property Name="orderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="orderDate" Type="DateTime" Precision="3" />
+          <Property Name="requiredDate" Type="DateTime" Precision="3" />
+          <Property Name="shippedDate" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="customerID" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="ProductLine">
+          <Key>
+            <PropertyRef Name="productLineID" />
+          </Key>
+          <Property Name="productLineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productLine" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_ProductLines" FromRole="ProductLines" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="scale" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="quantityInStock" Type="Int16" />
+          <Property Name="quantityInOrder" Type="Int16" />
+          <Property Name="buyPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="productlineID" Type="Int32" />
+          <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetails_Products" FromRole="Products" ToRole="OrderDetails" />
+          <NavigationProperty Name="ProductLine" Relationship="Self.FK_Products_ProductLines" FromRole="Products" ToRole="ProductLines" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreId" />
+          </Key>
+          <Property Name="StoreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="latitude" Type="Double" />
+          <Property Name="longitude" Type="Double" />
+        </EntityType>
+        <Association Name="FK_Customers_Countries">
+          <End Role="Countries" Type="miniatuurlandModel.Country" Multiplicity="0..1" />
+          <End Role="Customers" Type="miniatuurlandModel.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="countryID" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Customers">
+          <End Role="Customers" Type="miniatuurlandModel.Customer" Multiplicity="0..1" />
+          <End Role="Orders" Type="miniatuurlandModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Role="Orders" Type="miniatuurlandModel.Order" Multiplicity="1" />
+          <End Role="OrderDetails" Type="miniatuurlandModel.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="orderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Products">
+          <End Role="Products" Type="miniatuurlandModel.Product" Multiplicity="1" />
+          <End Role="OrderDetails" Type="miniatuurlandModel.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductLines">
+          <End Role="ProductLines" Type="miniatuurlandModel.ProductLine" Multiplicity="0..1" />
+          <End Role="Products" Type="miniatuurlandModel.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductLines">
+              <PropertyRef Name="productLineID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="productlineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="miniatuurlandEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Countries" EntityType="miniatuurlandModel.Country" />
+          <EntitySet Name="Customers" EntityType="miniatuurlandModel.Customer" />
+          <EntitySet Name="Employees" EntityType="miniatuurlandModel.Employee" />
+          <EntitySet Name="OrderDetails" EntityType="miniatuurlandModel.OrderDetail" />
+          <EntitySet Name="Orders" EntityType="miniatuurlandModel.Order" />
+          <EntitySet Name="ProductLines" EntityType="miniatuurlandModel.ProductLine" />
+          <EntitySet Name="Products" EntityType="miniatuurlandModel.Product" />
+          <EntitySet Name="Stores" EntityType="miniatuurlandModel.Store" />
+          <AssociationSet Name="FK_Customers_Countries" Association="Self.FK_Customers_Countries">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Products" Association="Self.FK_OrderDetails_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductLines" Association="Self.FK_Products_ProductLines">
+            <End Role="ProductLines" EntitySet="ProductLines" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="miniatuurlandModelStoreContainer" CdmEntityContainer="miniatuurlandEntities1">
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="miniatuurlandModel.Country">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="country" ColumnName="country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="miniatuurlandModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="passwordQuestion" ColumnName="passwordQuestion" />
+                <ScalarProperty Name="passwordAnswer" ColumnName="passwordAnswer" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="isapproved" ColumnName="isapproved" />
+                <ScalarProperty Name="lastactivitydate" ColumnName="lastactivitydate" />
+                <ScalarProperty Name="lastlogindate" ColumnName="lastlogindate" />
+                <ScalarProperty Name="lastpasswordchangeddate" ColumnName="lastpasswordchangeddate" />
+                <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+                <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
+                <ScalarProperty Name="IsLockedOut" ColumnName="IsLockedOut" />
+                <ScalarProperty Name="FailedPasswordAttemptCount" ColumnName="FailedPasswordAttemptCount" />
+                <ScalarProperty Name="FailedPasswordAttemptWindowStart" ColumnName="FailedPasswordAttemptWindowStart" />
+                <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
+                <ScalarProperty Name="FailedPasswordAnswerAttemptWindowStart" ColumnName="FailedPasswordAnswerAttemptWindowStart" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="miniatuurlandModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="reportsTo" ColumnName="reportsTo" />
+                <ScalarProperty Name="jobTitle" ColumnName="jobTitle" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="miniatuurlandModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="orderID" ColumnName="orderID" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="quantityOrdered" ColumnName="quantityOrdered" />
+                <ScalarProperty Name="priceEach" ColumnName="priceEach" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="miniatuurlandModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="orderID" ColumnName="orderID" />
+                <ScalarProperty Name="orderDate" ColumnName="orderDate" />
+                <ScalarProperty Name="requiredDate" ColumnName="requiredDate" />
+                <ScalarProperty Name="shippedDate" ColumnName="shippedDate" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductLines">
+            <EntityTypeMapping TypeName="miniatuurlandModel.ProductLine">
+              <MappingFragment StoreEntitySet="ProductLines">
+                <ScalarProperty Name="productLineID" ColumnName="productLineID" />
+                <ScalarProperty Name="productLine" ColumnName="productLine" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="miniatuurlandModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="product" ColumnName="product" />
+                <ScalarProperty Name="scale" ColumnName="scale" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="quantityInStock" ColumnName="quantityInStock" />
+                <ScalarProperty Name="quantityInOrder" ColumnName="quantityInOrder" />
+                <ScalarProperty Name="buyPrice" ColumnName="buyPrice" />
+                <ScalarProperty Name="productlineID" ColumnName="productlineID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stores">
+            <EntityTypeMapping TypeName="miniatuurlandModel.Store">
+              <MappingFragment StoreEntitySet="Stores">
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

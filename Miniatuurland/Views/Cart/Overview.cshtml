@@ -1,0 +1,133 @@
+﻿@using Miniatuurland.Models
+@model List<CartItem>
+
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+
+
+<div class="page-header">
+    @*@if (ViewBag.errorcount > 0)
+    {
+        <div class="alert alert-warning">@Html.ValidationSummary()</div>
+    }*@
+
+
+    <div class="row">
+        <div class="col col-md-1">
+            <a href='#' onclick="goBack()">
+                <img src='@Url.Content("~/Images/BackButton.png")' style='height:35px;width:35px;' title='Back to Shop' alt="Go Back button" />
+            </a>
+        </div>
+        <div class="col col-md-8">
+            <p class="lead">@ViewBag.Title</p>
+        </div>
+        <div class="col-md-2" style="float:right">
+            @if (Model.Count > 0)
+            {
+                <a href='@Url.Action("CheckoutConfirm","Cart")'>
+                    <img src='@Url.Content("~/Images/checkout.png")' alt='Continue to checkout' title='Checkout'
+                         style='height:auto;width:43px;float:left' />
+                </a>
+            }
+            <a href='@Url.Action("Empty","Cart")'>
+                <img src='@Url.Content("~/Images/shop-cart-exclude-icon.png")' style='height:40px;width:40px;float:right;' title='Empty Shopping Cart' alt="Empty Shopping cart button" />
+            </a>
+        </div>
+    </div>
+</div>
+
+@*Tabel laten zien als er items in shopping cart zitten*@
+@if (Model.Count > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr class="row">
+                <th class="col-md-1">ID</th>
+                <th class="col-md-7">Product Name</th>
+                <th class="col-md-2">Quantity</th>
+                <th class="col-md-1">Price</th>
+                <th class="col-md-1">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @*
+                1 rij per cartitem, ondertussen totaalprijs optellen
+            *@
+            @{
+                decimal total = 0.0m;
+            }
+            @foreach (var item in Model)
+            {
+                total += item.itemPrice;
+                <tr class="row">
+                    <td class="" valign='middle'>@Html.DisplayFor(p => item.itemId)</td>
+                    <td class="" valign='middle'>@Html.DisplayFor(p => item.itemName)</td>
+                    <td class="" valign='middle'>
+
+                        @using (Html.BeginForm("Update", "Cart", FormMethod.Get))
+                        {
+                            <input type='hidden' value='@item.itemId' name='productId' />
+                            <span>
+                                <input class='form-control' type='number' name='quantity'
+                                       value='@item.quantity'
+                                       style="width:65%;height:40px;float:left;" for='@item.quantity' />
+
+                                @*<p class='btn btn-default' type='submit' style="width:40%;height:40px;float:right">*@
+                                <input type="image" class="btn btn-default" src=@Url.Content("~/Images/update.png") alt='Update button'
+                                       style="width:auto;height:40px;float:right" />
+                                @*</p>*@
+                            </span>
+                        }
+                    </td>
+                    <td valign='middle'>@Html.DisplayFor(p => item.itemPrice)</td>
+                    <td valign='middle'>
+
+                        <a href='@Url.Action("Delete", "Cart", new { productId = item.itemId })' class="btn btn-default"
+                           style="width:100%;height:40px;align-content:center">
+                            <img src=@Url.Content("~/Images/nok.png") alt="delete button"
+                                 style="height:20px;" />
+                        </a>
+
+                    </td>
+                </tr>
+            }
+            @*Totaalrij*@
+            @{
+                var totalString = String.Format("{0:€ ##0.00}", total);
+            }
+            <tr class="row" valign='middle'>
+                <td></td>
+                <td></td>
+                <td><strong>Total</strong></td>
+                <td>
+                    @totalString
+                </td>
+                <td></td>
+
+            </tr>
+        </tbody>
+    </table>
+                }
+                @*Anders een boodschap: geen items in winkelmandje*@
+else
+{
+    <p class="lead">The shopping cart is empty at the moment</p>
+}
+
+
+
+@section scripts{
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+}
+
+
+
+
+
+
+

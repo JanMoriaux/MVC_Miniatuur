@@ -1,0 +1,45 @@
+﻿@model List<Miniatuurland.Models.Product>
+
+@{
+//ViewBag.Title = "List";
+
+}
+
+<div class="well">
+    <p class="lead">
+        <img src='@Url.Content("~/Images/productlines/" + ViewBag.productline.productLineID + ".png")'
+             alt="Productline image" />
+        @ViewBag.productline.productLine
+    </p>
+    <table class="table table-striped">
+        <tr>
+            <th>Products</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">In Stock</th>
+            <th class="text-center">Description</th>
+            <th class="text-center">Order</th>
+        </tr>
+
+        @foreach (var product in Model)
+        {
+
+            <tr>
+                <td>@Html.DisplayFor(m => product.product)</td>
+                <td class="text-right">@Html.DisplayFor(m => product.buyPrice)</td>
+                <td class="text-right">@Html.DisplayFor(m => product.actualStock)</td>
+                <td class="text-center">
+                    <a href='@Url.Action("Details","Product",new {id= product.productID})'>
+                        <img src='@Url.Content("~/Images/more-info-button.png")'
+                             alt="Productline image" style="height:20px;width:auto" />
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a href='@Url.Action("Add","Cart",new { productId = product.productID })'>
+                        <img src='@Url.Content("~/Images/shop-cart-add-icon.png")' alt="add to shopping cart button"
+                             style="height:25px;width:auto" />
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

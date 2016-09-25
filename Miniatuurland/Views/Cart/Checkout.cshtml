@@ -1,0 +1,134 @@
+﻿@using Miniatuurland.Models
+@model OrderSummaryViewModel
+
+@{
+    ViewBag.Title = "Order Summary";
+}
+
+<div class="page-header">
+    <div class="row">
+        <div class="col col-md-1">
+            <a href='#' onclick="goBack()">
+                <img src='@Url.Content("~/Images/BackButton.png")' style='height:auto;width:40px;' title='Back to Shop' />
+            </a>
+        </div>
+        <div class="col col-md-8">
+            <p class="lead">@ViewBag.Title</p>
+        </div>
+    </div>
+</div>
+
+
+@if (Model == null)
+{
+    <p class="lead">
+        A problem has occurred saving your order to the database.
+        We're sorry for the inconvenience.
+    </p>
+}
+else
+{
+
+    <p class="lead">Details for order @Model.orderID</p>
+
+    <div class="row">
+        <div class="col-md-3">
+            <label class="label-primary chocolate">Customer Information</label>
+            <p>
+                <table class="table table-condensed">
+                    <tr>
+                        <td class="col-md-1">@Html.LabelFor(m => m.name)</td>
+                        <td class="col-md2">@Html.DisplayFor(m => m.name)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.address)</td>
+                        <td>@Html.DisplayFor(m => m.address)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.city)</td>
+                        <td>@Html.DisplayFor(m => m.city)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.postalCode)</td>
+                        <td>@Html.DisplayFor(m => m.postalCode)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.state)</td>
+                        <td>@Html.DisplayFor(m => m.state)</td>
+                    </tr>                    
+                    <tr>
+                        <td>@Html.LabelFor(m => m.email)</td>
+                        <td>@Html.DisplayFor(m => m.email)</td>
+                    </tr>
+                </table>
+            </p>
+        </div>
+        <div class="col col-md-3" style="float:right">
+            <label class="label-primary chocolate">Order Information</label>
+            <p>
+                <table class="table table-condensed">
+                    <tr>
+                        <td class="col-md-1">@Html.LabelFor(m => m.orderID)</td>
+                        <td class="col-md2">@Html.DisplayFor(m => m.orderID)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.orderDate)</td>
+                        <td>@Html.DisplayFor(m => m.orderDate)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.requiredDate)</td>
+                        <td>@Html.DisplayFor(m => m.requiredDate)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.status)</td>
+                        <td>@Html.DisplayFor(m => m.status)</td>
+                    </tr>
+                </table>
+            </p>
+        </div>
+    </div>
+    <div class="container">
+        <label class="label-primary chocolate">Order Details</label>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="col-md-1">ID</th>
+                    <th class="col-md-7">Product Name</th>
+                    <th class="col-md-2">Quantity Ordered</th>
+                    <th class="col-md-1">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                @{
+                    decimal total = 0.0m;
+                }
+                @foreach (var item in Model.OrderDetails)
+                {
+                    total += (decimal)item.priceEach;
+                    var priceString = String.Format("{0:€ ##0.00}", item.priceEach);
+                    <tr>
+                        <td>@Html.DisplayFor(m => item.productID)</td>
+                        <td>@Html.DisplayFor(m => item.Products.product)</td>
+                        <td>@Html.DisplayFor(m => item.quantityOrdered)</td>
+                        <td>@Html.DisplayFor(m => priceString)</td>
+                    </tr>
+                }
+                @*Totaalrij*@
+                @{
+                    var totalString = String.Format("{0:€ ##0.00}", total);
+                }
+                <tr>                    
+                    <td></td>
+                    <td></td>
+                    <td><strong>Total</strong></td>
+                    <td>
+                        @totalString
+                    </td>                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div></div>
+
+                    }

@@ -1,0 +1,81 @@
+﻿@* model aangepast: productcontroller geeft lijst terug van productlines *@
+@model List<Miniatuurland.Models.ProductLine>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@* nog aan te passen!! *@
+<table class="">
+    <tr>
+        <th>
+            @foreach (var productlijn in Model)
+            {
+                
+                       <a href='@Url.Action("List","Product",new {id= productlijn.productLineID})'>
+               <div class="well">                   
+                   <p class="lead">
+                           <img src='@Url.Content("~/Images/productlines/" + productlijn.productLineID + ".png")'
+                                alt="Productline image" />
+                           @Html.DisplayFor(m => productlijn.productLine)
+                   </p>
+                   <p class="panel-body">@Html.DisplayTextFor(m => productlijn.description)</p>                   
+               </div>
+                       </a>
+                
+            }
+            @*<img src="~/Images/miniatuurland.png"/>*@
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.scale)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.quantityInStock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.quantityInOrder)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.buyPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductLine.productLine)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.product)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.scale)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.quantityInStock)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.quantityInOrder)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.buyPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductLine.productLine)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.productID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.productID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.productID })
+        </td>*@
+    </tr>
+}
+
+</table>
